@@ -22,7 +22,7 @@ def load_number_dataset(length=100):
 
 def transform_dataset(x, y):
     new_x_shape = (x.shape[0], HEIGHT, WIDTH, 3)
-    new_y_shape = (y.shape[0], HEIGHT, WIDTH, 1)
+    new_y_shape = (y.shape[0], HEIGHT, WIDTH, 2)
     new_x = np.zeros(shape=new_x_shape)
     new_y = np.zeros(shape=new_y_shape)
 
