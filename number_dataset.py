@@ -28,7 +28,7 @@ def transform_dataset(x, y):
 
     for i in range(len(x)):
         new_x[i] = create_three_channel_image(x[i])
-        new_y[i] = create_mask_image(new_x[i])
+        new_y[i] = create_mask_image(new_x[i], y[(i, 0)])
     return new_x, new_y
 
 
@@ -44,7 +44,7 @@ def create_three_channel_image(np_array):
     return cv2.resize(img, dsize=(HEIGHT, WIDTH))
 
 
-def create_mask_image(np_array):
+def create_mask_image(np_array, class_value):
     w, h, _ = np_array.shape
     img = np.zeros((w, h))
     for i in range(w):
@@ -52,4 +52,10 @@ def create_mask_image(np_array):
             if np_array[(i, j, 0)] > 0:
                 img[(i, j)] = 255
     img = cv2.resize(img, dsize=(HEIGHT, WIDTH))
-    return np.expand_dims(img, axis=-1)
+
+    tmp = np.expand_dims(img, axis=-1)
+    tmp = tmp * np.ones((1, 1, 2))
+    for i in range(HEIGHT):
+        for j in range(WIDTH):
+            tmp[(i, j, 1)] = class_value if img[(i, j)] > 0 else 0
+    return tmp
