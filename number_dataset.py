@@ -22,7 +22,7 @@ def load_number_dataset(length=100):
 
 def transform_dataset(x, y):
     new_x_shape = (x.shape[0], HEIGHT, WIDTH, 3)
-    new_y_shape = (y.shape[0], HEIGHT, WIDTH, 2)
+    new_y_shape = (y.shape[0], HEIGHT, WIDTH, 1)
     new_x = np.zeros(shape=new_x_shape)
     new_y = np.zeros(shape=new_y_shape)
 
@@ -51,12 +51,8 @@ def create_mask_image(np_array, class_value):
     for i in range(w):
         for j in range(h):
             if np_array[(i, j, 0)] <= 0:
-                img[(i, j)] = 255
+                img[(i, j)] = class_value
+            else:
+                img[(i, j)] = -1
     img = cv2.resize(img, dsize=(HEIGHT, WIDTH))
-
-    tmp = np.expand_dims(img, axis=-1)
-    tmp = tmp * np.ones((1, 1, 2))
-    for i in range(HEIGHT):
-        for j in range(WIDTH):
-            tmp[(i, j, 1)] = class_value if img[(i, j)] > 0 else 0
-    return tmp
+    return np.expand_dims(img, axis=-1)
