@@ -14,7 +14,14 @@ def prepare_figure(numpy_array):
         for i in range(h):
             for j in range(w):
                 if mask[(i, j)] > 0:
-                    image[h, w, ...] = get_rgb_color(class_values[(i, j)])
+                    color = get_rgb_color(class_values[(i, j)])
+                    image[i, j, 0] = color[0]
+                    image[i, j, 1] = color[1]
+                    image[i, j, 2] = color[2]
+                else:
+                    image[i, j, 0] = 255
+                    image[i, j, 1] = 255
+                    image[i, j, 2] = 255
         plt.imshow(image)
 
 
@@ -38,7 +45,7 @@ def get_rgb_color(class_value):
     if class_value == 8:
         return np.array([102, 204, 255])  # light blue
     if class_value == 9:
-        return np.array([102, 51, 00])  # brown
+        return np.array([102, 51, 0])  # brown
 
 
 def show_prepared_figures():
