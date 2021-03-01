@@ -36,8 +36,8 @@ class Inference:
         random_index = 0
 
         test_input = x_test[random_index]  # numpy array with shape (H, W, 3)
-        test_output = predictions[random_index]  # numpy array with shape (H, W, 1)
-        expected_output = y_test[random_index]  # numpy array with shape (H, W, 1)
+        test_output = predictions[random_index]  # numpy array with shape (H, W, 2)
+        expected_output = y_test[random_index]  # numpy array with shape (H, W, 2)
 
         visualize.prepare_figure(test_input)
         visualize.prepare_figure(test_output)
